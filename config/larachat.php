@@ -26,7 +26,21 @@ return [
          * The Middleware used to wrap all the API, can be set as a empty array.
          */
         "global_middlewares" => []
-    ]
+    ],
 
+    /*
+     * The different types of Feeds available on the App ( Only one version for the V1 )
+     */
+    "feeds" => [
+
+        "user_feed" => [
+             // Config of the Messages used in the Threads Feed
+            "messages" => [
+                // The Model that interacts with the messages
+                "messageable_model" => App\Models\User::class,
+            ]
+        ]
+
+    ]
 
 ];
