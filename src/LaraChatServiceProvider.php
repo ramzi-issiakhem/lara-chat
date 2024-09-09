@@ -66,7 +66,7 @@ class LaraChatServiceProvider extends ServiceProvider
         ],'larachat-migrations');
 
         if (LaraChat::shouldRunMigrations()) {
-            $this->loadMigrationsFrom(__DIR__ . '../database/migrations');
+            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         }
 
     }

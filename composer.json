@@ -22,7 +22,7 @@
     "extra": {
         "laravel": {
             "providers": [
-              "LarachatServiceProvider"
+              "Ramzi\\LaraChat\\LaraChatServiceProvider"
             ]
         },
         "branch-alias": {
