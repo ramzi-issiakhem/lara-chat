@@ -13,16 +13,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('feeds', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('thread_id')->constrained('threads');
-            $table->enum('type',MessageTypesEnum::typesValue());
-            $table->string('content');
-            $table->morphs('messageable');
-            $table->timestamp('sent_at')->default(now());
-            $table->timestamp('edited_at')->nullable();
-            $table->softDeletes();
+            $table->morphs('feedable');
+            $table->string('name')->unique();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('feeds');
     }
 };

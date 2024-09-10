@@ -4,6 +4,7 @@ namespace Ramzi\LaraChat\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Message extends Model
 {
@@ -13,7 +14,8 @@ class Message extends Model
         return $this->belongsTo(Thread::class);
     }
 
-    public function messageable() {
+    public function messageable(): MorphTo
+    {
         return $this->morphTo();
     }
 

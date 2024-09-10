@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 return [
 
     /*
@@ -34,10 +36,15 @@ return [
     "feeds" => [
 
         "user_feed" => [
+            // The Model that will host this type of feed
+            "feed_model" => User::class,
+
+            // The Model that interacts with the messages and the threads
+            "messageable_model" => User::class,
+
              // Config of the Messages used in the Threads Feed
             "messages" => [
-                // The Model that interacts with the messages
-                "messageable_model" => App\Models\User::class,
+
             ]
         ]
 
