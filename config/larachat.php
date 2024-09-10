@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 return [
 
     /*
@@ -26,7 +28,26 @@ return [
          * The Middleware used to wrap all the API, can be set as a empty array.
          */
         "global_middlewares" => []
-    ]
+    ],
 
+    /*
+     * The different types of Feeds available on the App ( Only one version for the V1 )
+     */
+    "feeds" => [
+
+        "user_feed" => [
+            // The Model that will host this type of feed
+            "feed_model" => User::class,
+
+            // The Model that interacts with the messages and the threads
+            "messageable_model" => User::class,
+
+             // Config of the Messages used in the Threads Feed
+            "messages" => [
+
+            ]
+        ]
+
+    ]
 
 ];
