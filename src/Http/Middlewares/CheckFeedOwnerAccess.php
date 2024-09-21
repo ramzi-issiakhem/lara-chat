@@ -20,10 +20,13 @@ class CheckFeedOwnerAccess
         $feedOwnerModelId = $request->route('feedOwnerModelId');
 
         // Retrieve the Feed Owner Model and check if it exists
-        $feedOwnerModel = $modelClass::find($feedOwnerModelId)->first();
-        if (!$feedOwnerModel) {
+
+        try {
+            $feedOwnerModel = $modelClass::findOrFail($feedOwnerModelId);
+        } catch (\Exception $e) {
             throw new FeedOwnerModelNotFoundException();
         }
+
 
         $hasAccess = Larachat::authorizeFeedAccess($request->user(), $feedOwnerModel);
         if (!$hasAccess) {

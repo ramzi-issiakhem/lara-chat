@@ -10,10 +10,8 @@ Route::group([
     "namespace" => "Ramzi\LaraChat\Http\Controllers",
 ], function () {
 
-    // Feed Related Routes
     Route::middleware(["check-feed-owner-access"])->group(function () {
-        Route::get('feed/{feedOwnerModelId}', [FeedController::class, 'show']);
-        Route::get('feed/{feedOwnerModelId}/threads', [FeedController::class, 'index']);
+        Route::get('feed/{feedOwnerModelId}', FeedController::class);
     });
 
 
