@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('feeds', function (Blueprint $table) {
             $table->id();
-            $table->morphs('feedable');
             $table->string('name')->unique();
             $table->timestamps();
             $table->softDeletes();

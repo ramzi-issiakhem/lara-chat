@@ -2,27 +2,39 @@
 
 namespace Ramzi\LaraChat\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Ramzi\LaraChat\Facades\LaraChat;
+use Ramzi\LaraChat\Traits\ManageCustomUserModel;
 
 class Message extends Model
 {
+    use ManageCustomUserModel;
 
+    protected $table = 'messages';
 
-    public function thread() {
+    /**
+     * Return the Thread related to this Message
+     * @return BelongsTo
+     */
+    public function thread(): BelongsTo
+    {
         return $this->belongsTo(Thread::class);
     }
 
-    public function messageable(): MorphTo
+    /**
+     * Return the Sender of this message
+     * Configurable to use a custom Model in the config file
+     * @return BelongsTo
+     */
+    public function sender(): BelongsTo
     {
-        return $this->morphTo();
+        $customModel = $this->getLaraChatSenderModel();
+        return $this->belongsTo($customModel, 'sender_id');
     }
 
-
-    public function reactions(): HasMany
-    {
-        return $this->hasMany(Reaction::class);
-    }
 
 }

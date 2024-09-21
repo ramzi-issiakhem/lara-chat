@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('threads', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('feed_id')->constrained("feeds");
+            $table->foreignId('feed_id')->references('id')->on("feeds");
             $table->string('name');
             $table->enum('type',ThreadTypesEnum::typesValue());
             $table->string("color")->default("#ff0814");
@@ -31,6 +31,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('threads', function (Blueprint $table) {
+            $table->dropForeign(['feed_id']);
+            $table->dropColumn('feed_id');
+        });
+
         Schema::dropIfExists('threads');
     }
 };
