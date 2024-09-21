@@ -4,6 +4,7 @@ namespace Ramzi\LaraChat\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -16,10 +17,11 @@ class Feed extends Model
 
     /**
      * Return the Relationship representing  the list of All Threads  in this Feed
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function threads() : HasMany {
-        return $this->hasMany(Thread::class);
+    public function threads(): BelongsToMany
+    {
+        return $this->belongsToMany(Thread::class);
     }
 
     /**

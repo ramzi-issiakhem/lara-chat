@@ -29,18 +29,8 @@ class FeedController extends BaseController
 
         // Retrieve the Feed for the Feed Owner Model and check if it exists
         $feed = $feedOwnerModel->feed()->with("threads")->first();
-        if (!$feed) {
-            if (LaraChat::autoCreateFeed()) {
-                $feed = $feedOwnerModel->feed()->create([]);
-            } else {
-                throw new FeedNotFoundException(null, 404, [
-                    'feedOwnerModel' => $feedOwnerModel
-                ]);
-            }
-        }
 
-
-        $feedResource = FeedResource::make($feed);
+        $feedResource = new FeedResource($feed);
         return CustomJsonResponseHelper::successResponse(200, $feedResource);
 
     }

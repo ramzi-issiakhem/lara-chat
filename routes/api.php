@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Ramzi\LaraChat\Http\Controllers\FeedController;
+use Ramzi\LaraChat\Http\Controllers\ThreadController;
 
 
 Route::group([
@@ -12,6 +13,11 @@ Route::group([
 
     Route::middleware(["check-feed-owner-access"])->group(function () {
         Route::get('feed/{feedOwnerModelId}', FeedController::class);
+
+        Route::get('feed/{feedOwnerModelId}/threads', [ThreadController::class, 'index']);
+        Route::get('feed/{feedOwnerModelId}/thread', [ThreadController::class, 'show']);
+        Route::post('feed/{feedOwnerModelId}/threads', [ThreadController::class, 'store']);
+
     });
 
 

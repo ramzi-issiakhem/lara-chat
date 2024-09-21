@@ -2,24 +2,27 @@
 
 namespace Ramzi\LaraChat\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Ramzi\LaraChat\Traits\ManageMessageSenderModel;
 
 class Thread extends Model
 {
-    use ManageMessageSenderModel;
+    use ManageMessageSenderModel, HasFactory;
 
     protected $table = 'threads';
 
     /**
      * Return the Relationship representing the Feed related to this Thread
-     * @return BelongsTo
+     * @return BelongsToMany
      */
-    public function feed() : BelongsTo {
-        return $this->belongsTo(Feed::class);
+    public function feeds(): BelongsToMany
+    {
+        return $this->belongsToMany(Feed::class);
     }
 
     /**

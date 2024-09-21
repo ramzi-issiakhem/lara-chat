@@ -4,6 +4,7 @@ namespace Ramzi\LaraChat\Http\Utils;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CustomJsonResponseHelper
 {
@@ -16,6 +17,12 @@ class CustomJsonResponseHelper
      */
     public static function successResponse(int $code = 200, mixed $data = []): JsonResponse
     {
+
+        if ($data instanceof ResourceCollection) {
+            return $data->response()->setStatusCode($code);
+        }
+
+        // For non-paginated data, return a standard response
         $response = [
             'status' => 'success',
             'data' => $data,
