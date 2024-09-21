@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Ramzi\LaraChat\Http\Controllers\FeedController;
 
 
 Route::group([
@@ -10,41 +10,11 @@ Route::group([
     "namespace" => "Ramzi\LaraChat\Http\Controllers",
 ], function () {
 
-    //Feed Related Routes
-    Route::get('feeds/{feed_name}');
-
-    Route::prefix('feeds/{feed}/threads')->group(function () {
-
-        //Threads Related Routes
-        Route::get('/');
-        Route::get('{thread}');
-        Route::post('/');
-        Route::delete('thread}');
-        Route::put('{thread}');
-
-        // Participants Related Routes
-        Route::get('{thread}/participants');
-        Route::post('{thread}/participants');
-        Route::delete('{thread}/participants/{participant}');
-
-        // Thread Seen Related Routes
-        Route::get('{thread}/views');
-        Route::post('{thread}/read');
-
-        //Messages Related Routes
-        Route::get('{thread}/messages');
-        Route::put('{thread}/messages/{message}');
-        Route::post('{thread}/messages');
-        Route::delete('{thread}/messages/{message}');
-
-        //Reactions Related Routes
-        Route::get('{thread}/messages/{message}/reactions');
-        Route::post('{thread}/messages/{message}/reactions');
-        Route::delete('{thread}/messages/{message}/reactions');
-        Route::delete('{thread}/messages/{message}/reactions/{reaction}');
+    // Feed Related Routes
+    Route::middleware(["check-feed-owner-access"])->group(function () {
+        Route::get('feed/{feedOwnerModelId}', [FeedController::class, 'show']);
+        Route::get('feed/{feedOwnerModelId}/threads', [FeedController::class, 'index']);
     });
 
-
-    //Thread Seen Related Routes
 
 });
