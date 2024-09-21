@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Facade;
  * The LaraChat Facade
  * @method static bool shouldRunMigrations()
  * @method static bool isApiExposed()
+ * @method static string getSenderModel()
+ * @method static string getSenderModelTable()
+ * @method static string getFeedOwnerModel()
+ * @method static string getFeedOwnerModelTable()
+ *
  */
 class LaraChat extends Facade
 {
