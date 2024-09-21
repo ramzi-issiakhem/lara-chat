@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Ramzi\LaraChat\Traits\ManageCustomUserModel;
+use Ramzi\LaraChat\Traits\ManageMessageSenderModel;
 
 class Participant extends Model
 {
 
-    use ManageCustomUserModel;
+    use ManageMessageSenderModel;
 
     protected $table = 'participants';
 

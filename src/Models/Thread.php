@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Ramzi\LaraChat\Traits\ManageCustomUserModel;
+use Ramzi\LaraChat\Traits\ManageMessageSenderModel;
 
 class Thread extends Model
 {
-    use ManageCustomUserModel;
+    use ManageMessageSenderModel;
 
     protected $table = 'threads';
 
