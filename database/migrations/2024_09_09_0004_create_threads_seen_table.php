@@ -14,11 +14,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('thread_seens', function (Blueprint $table) {
+        Schema::create('threads_seen', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('last_message_seen_id')->constrained('messages');
-            $table->foreignId('thread_id')->constrained('threads');
-            $table->morphs('seenable');
+            $table->foreignId('last_message_seen_id')->references('id')->on('messages');
+            $table->foreignId('thread_id')->references('id')->on('threads');
             $table->timestamp('seen_at')->default(now());
             $table->timestamps();
             $table->softDeletes();
@@ -30,6 +29,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('threads');
+        Schema::table('threads_seen', function (Blueprint $table) {
+            $table->dropForeign(['last_message_seen_id']);
+            $table->dropColumn('last_message_seen_id');
+            $table->dropForeign(['thread_id']);
+            $table->dropColumn('thread_id');
+        });
+
+        Schema::dropIfExists('threads_seen');
     }
 };

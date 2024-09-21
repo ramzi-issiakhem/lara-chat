@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('thread_id')->constrained("threads");
-            $table->morphs("participantable");
+            $table->foreignId('thread_id')->references('id')->on("threads");
+            $table->timestamp('added_at')->default(now());
             $table->timestamps();
             $table->softDeletes();
 
@@ -29,6 +29,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('participants', function (Blueprint $table) {
+            $table->dropForeign(['thread_id']);
+            $table->dropColumn('thread_id');
+        });
+
         Schema::dropIfExists('participants');
     }
 };

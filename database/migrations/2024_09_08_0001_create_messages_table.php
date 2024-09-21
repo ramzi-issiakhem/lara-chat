@@ -15,10 +15,9 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('thread_id')->constrained('threads');
+            $table->foreignId('thread_id')->references('id')->on('threads');
             $table->enum('type',MessageTypesEnum::typesValue());
             $table->string('content');
-            $table->morphs('messageable');
             $table->timestamp('sent_at')->default(now());
             $table->timestamp('edited_at')->nullable();
             $table->softDeletes();
@@ -31,6 +30,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('messages', function (Blueprint $table) {
+            $table->dropForeign(['thread_id']);
+            $table->dropColumn('thread_id');
+        });
+
         Schema::dropIfExists('messages');
     }
 };
