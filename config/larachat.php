@@ -27,7 +27,7 @@ return [
         /*
          * The Middleware used to wrap all the API, can be set as an empty array.
          */
-        "global_middlewares" => []
+        "global_middlewares" => ['auth']
     ],
 
 
@@ -40,5 +40,12 @@ return [
      * The Model that will have access to his Feed that contains the threads he's part of ( Only one in V1 ).
      */
     "feed_owner_model" => User::class,
+
+    /*
+     *  Should the Feed be created automatically when the feed is not found.
+     */
+    "auto_create_feed" => true,
+
+
 
 ];
