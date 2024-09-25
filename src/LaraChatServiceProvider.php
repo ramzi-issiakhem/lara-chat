@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Support\ServiceProvider;
 use Ramzi\LaraChat\Facades\LaraChat;
 use Ramzi\LaraChat\Facades\LaraChatManager;
-use Ramzi\LaraChat\Http\Middlewares\CheckFeedOwnerAccess;
+use Ramzi\LaraChat\Http\Middlewares\CanAccessFeed;
 
 class LaraChatServiceProvider extends ServiceProvider
 {
@@ -57,7 +57,7 @@ class LaraChatServiceProvider extends ServiceProvider
 
     private function configureMiddlewares()
     {
-        $this->app['router']->aliasMiddleware('check-feed-owner-access', CheckFeedOwnerAccess::class);
+        $this->app['router']->aliasMiddleware('can_access_feed', CanAccessFeed::class);
 
     }
 

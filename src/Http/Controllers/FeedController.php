@@ -2,17 +2,11 @@
 
 namespace Ramzi\LaraChat\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Ramzi\LaraChat\Exceptions\FeedNotFoundException;
-use Ramzi\LaraChat\Exceptions\FeedOwnerModelNotFoundException;
-use Ramzi\LaraChat\Facades\LaraChat;
 use Ramzi\LaraChat\Http\Resources\FeedResource;
-use Ramzi\LaraChat\Http\Utils\CustomJsonResponseHelper;
-use Ramzi\LaraChat\Models\Feed;
-use Ramzi\LaraChat\Traits\ManageMessageSenderModel;
+use Ramzi\LaraChat\Utils\CustomJsonResponseHelper;
 
 class FeedController extends BaseController
 {
@@ -25,10 +19,10 @@ class FeedController extends BaseController
     public function __invoke(Request $request): JsonResponse
     {
         // Retrieve the Feed Owner Model from the Request that was created by the Middleware
-        $feedOwnerModel = $request->get('feedOwnerModel');
+        $feed = \feed();
 
         // Retrieve the Feed for the Feed Owner Model and check if it exists
-        $feed = $feedOwnerModel->feed()->with("threads")->first();
+        $feed = $feed->load("threads")->first();
 
         $feedResource = new FeedResource($feed);
         return CustomJsonResponseHelper::successResponse(200, $feedResource);
