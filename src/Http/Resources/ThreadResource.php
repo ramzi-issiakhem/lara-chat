@@ -29,6 +29,7 @@ class ThreadResource extends JsonResource
                 });
             }),
             //TODO Display the participants
+            'participants_count' => $this->participants_count ?? 0,
 //            'participants' => $this->whenLoaded('participants')
             'name' => $this->name,
             'type' => $this->type,
