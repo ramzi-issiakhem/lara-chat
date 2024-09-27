@@ -2,8 +2,14 @@
 
 namespace Ramzi\LaraChat\Facades;
 
+use Closure;
+use Illuminate\Http\Request;
+
 class LaraChatManager
 {
+
+    private Closure $feedOwnerAccessResolver;
+
 
     /**
      * Verify if the migrations should be run by defalut when executing artisan migration command
@@ -59,6 +65,38 @@ class LaraChatManager
         $model = $this->getFeedOwnerModel();
 
         return app($model)->getTable();
+    }
+
+    /**
+     * Verify if the Feed should be created automatically if not found.
+     * @return bool
+     */
+    public static function autoCreateFeed(): bool
+    {
+        return config("larachat.auto_create_feed", true);
+    }
+
+    /**
+     * Resolve the access logic to the feed model.
+     * @param Closure $callback
+     * @return LaraChatManager
+     */
+    public function resolveFeedOwnerAccess(Closure $callback): static
+    {
+        $this->feedOwnerAccessResolver = $callback;
+        return $this;
+    }
+
+    /**
+     * Authorize the access to the feed.
+     * @param $user
+     * @param $feedOwnerModel
+     * @return bool
+     */
+    public function authorizeFeedAccess($user, $feedOwnerModel): bool
+    {
+        $callback = $this->feedOwnerAccessResolver;
+        return $callback($user, $feedOwnerModel);
     }
 
 }

@@ -6,7 +6,10 @@
     "autoload": {
         "psr-4": {
             "Ramzi\\LaraChat\\": "src/"
-        }
+        },
+        "files": [
+            "src/Utils/helpers.php"
+        ]
     },
     "authors": [
         {

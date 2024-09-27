@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Ramzi\LaraChat\Facades\LaraChat;
-use Ramzi\LaraChat\Traits\ManageCustomUserModel;
+use Ramzi\LaraChat\Traits\ManageMessageSenderModel;
 
 class ThreadSeen extends Model
 {
-    use ManageCustomUserModel;
+    use ManageMessageSenderModel;
 
     protected $table = 'threads_seen';
 

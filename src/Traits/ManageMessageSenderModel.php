@@ -10,7 +10,7 @@ use Ramzi\LaraChat\Models\Message;
 use Ramzi\LaraChat\Models\Participant;
 use Ramzi\LaraChat\Models\Thread;
 
-trait ManageCustomUserModel
+trait ManageMessageSenderModel
 {
 
     /**

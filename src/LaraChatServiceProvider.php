@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Support\ServiceProvider;
 use Ramzi\LaraChat\Facades\LaraChat;
 use Ramzi\LaraChat\Facades\LaraChatManager;
+use Ramzi\LaraChat\Http\Middlewares\CanAccessFeed;
 
 class LaraChatServiceProvider extends ServiceProvider
 {
@@ -13,6 +14,11 @@ class LaraChatServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerBindings();
+
+        LaraChat::resolveFeedOwnerAccess(function ($user, $feedOwnerModel) {
+            return $user->id === $feedOwnerModel->id;
+        });
+
     }
 
 
@@ -22,6 +28,7 @@ class LaraChatServiceProvider extends ServiceProvider
             $this->publishConfig();
             $this->configureMigrations();
         }
+
 
         $this->defineRoutes();
         $this->configureGuards();
@@ -50,6 +57,7 @@ class LaraChatServiceProvider extends ServiceProvider
 
     private function configureMiddlewares()
     {
+        $this->app['router']->aliasMiddleware('can_access_feed', CanAccessFeed::class);
 
     }
 
